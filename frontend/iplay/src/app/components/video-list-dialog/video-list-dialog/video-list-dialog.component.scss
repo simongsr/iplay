@@ -1,0 +1,30 @@
+table {
+    width: 100%;
+}
+
+mat-header-row, mat-header-cell {
+    min-height: 40px;
+}
+
+mat-cell {
+    font-size: 10px;
+}
+
+mat-row, mat-cell {
+    min-height: 40px;
+    height: 40px;
+}
+
+mat-header-cell.action, mat-cell.action {
+    max-width: 70px;
+    width: 70px;
+}
+
+mat-header-cell.duration, mat-cell.duration {
+    max-width: 100px;
+    width: 100px;
+}
+
+mat-cell.action button {
+    font-size: 10px;
+}

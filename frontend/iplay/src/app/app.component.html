@@ -1,0 +1,109 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>{{title}}</span>
+  <span class="toolbar-spacer"></span>
+  
+  <!-- <button mat-icon-button aria-label="Import/export playlist" (click)="openImportExportDialog()">
+    <mat-icon>import_export</mat-icon>
+  </button> -->
+  
+</mat-toolbar>
+
+
+<mat-drawer-container class="sidenav-container">
+  <mat-drawer #sidenav mode="side" opened>
+    
+    <div style="min-width: 350px; min-height: 250px;">
+      <app-player #player *ngIf="playingVideoIndex >= 0" [video]="playlist.videos[playingVideoIndex]" (ended)="onVideoEnded($event)"></app-player>
+    </div>
+
+    <div #playlistContainer style="position: absolute; top: 250px; bottom: 0; width: 100%; overflow-x: auto; overflow-y: auto;">
+
+      <mat-divider></mat-divider>
+
+      <mat-selection-list multiple="false">
+        <mat-list-option *ngFor="let playlist of playlists; let ndx = index" [selected]="ndx === selectedPlaylistIndex" (click)="loadPlaylist(playlist)">
+          {{ playlist.name | titlecase }}
+
+          <button mat-icon-button class="list-clear-icon" aria-label="Delete playlist" [matMenuTriggerFor]="menu" appStopPropagation>
+            <mat-icon inline="true">more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [disabled]="playlist.favorite" (click)="setPlaylistFavorite(playlist)">Favorite</button>
+            <button mat-menu-item (click)="schedulePlaylistDeletion(playlist.name)">Delete</button>
+          </mat-menu>
+
+        </mat-list-option>
+      </mat-selection-list>
+
+    </div>
+
+    <button mat-mini-fab class="fab" color="link" aria-label="Create new playlist" (click)="openNewPlaylistDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+  </mat-drawer>
+
+  <mat-drawer-content #drawerContent>
+
+    <mat-table #videosTable [dataSource]="playlist.videos"><!-- class="mat-elevation-z8">-->
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.title | titlecase }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="author">
+        <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{ item.author.name | titlecase }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="duration">
+        <mat-header-cell class="duration" *matHeaderCellDef> Duration </mat-header-cell>
+        <mat-cell class="duration" *matCellDef="let item"> {{ item.duration | date: 'HH:mm:ss' : 'GMT' }} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="link">
+        <mat-header-cell class="action" *matHeaderCellDef> Link </mat-header-cell>
+        <mat-cell class="action" *matCellDef="let item">
+          <button mat-icon-button aria-label="Link" (click)="openLink(item.video_id)" appStopPropagation>
+            <mat-icon inline="true">link</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell class="action" *matHeaderCellDef> Delete </mat-header-cell>
+        <mat-cell class="action" *matCellDef="let item">
+          <button mat-icon-button aria-label="Delete" (click)="scheduleVideoRemoval(item.video_id)" appStopPropagation>
+            <mat-icon inline="true">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="disable">
+        <mat-header-cell class="action" *matHeaderCellDef> Disable </mat-header-cell>
+        <mat-cell class="action" *matCellDef="let item">
+          <button mat-icon-button aria-label="Disable" (click)="scheduleVideoDisabling(item.video_id)" appStopPropagation>
+            <mat-icon inline="true">clear</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+    
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+      <mat-row class="table-row" [ngClass]="{'selected': ndx === selectedVideoIndex, 'playing': ndx === playingVideoIndex}" *matRowDef="let row; columns: displayedColumns; let ndx = index;" (click)="selectVideo(ndx)" (dblclick)="playVideo(ndx)"></mat-row>
+    </mat-table>
+
+    <button mat-fab sticky class="fab-video" color="accent" aria-label="Add new video" (click)="toggleVideoMiniFabVisibility()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button #fabMiniAddVideo mat-mini-fab color="link" aria-label="Add video" [ngClass]="{'fab-mini-add-video': true, 'hidden': videoMiniFabVisible}" (click)="openVideoListDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+    <button #fabMiniAddNewVideo mat-mini-fab class="fab-mini-add-new-video" color="link" aria-label="Add new video" [ngClass]="{'fab-mini-add-new-video': true, 'hidden': videoMiniFabVisible}" (click)="openNewVideoDialog()">
+      <mat-icon>create</mat-icon>
+    </button>
+
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+<router-outlet></router-outlet>

@@ -1,0 +1,40 @@
+<h3 mat-dialog-title>Videos</h3>
+<mat-dialog-content>
+
+    <mat-table #selectingVideosTable [dataSource]="videos"><!-- class="mat-elevation-z8">-->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{ item.title | titlecase }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="author">
+          <mat-header-cell *matHeaderCellDef> Author </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{ item.author.name | titlecase }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="duration">
+          <mat-header-cell class="duration" *matHeaderCellDef> Duration </mat-header-cell>
+          <mat-cell class="duration" *matCellDef="let item"> {{ item.duration | date: 'HH:mm:ss' : 'GMT' }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="link">
+          <mat-header-cell class="action" *matHeaderCellDef> Link </mat-header-cell>
+          <mat-cell class="action" *matCellDef="let item">
+            <button mat-icon-button class="img-button" aria-label="Link" (click)="openLink(item.video_id)" appStopPropagation>
+              <mat-icon inline="true">link</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="add">
+          <mat-header-cell class="action" *matHeaderCellDef></mat-header-cell>
+          <mat-cell class="action" *matCellDef="let item">
+            <button mat-button class="txt-button" aria-label="Add video" [disabled]="item.selected" (click)="addVideo(item)" appStopPropagation>Add</button>
+          </mat-cell>
+        </ng-container>
+      
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row class="table-row" *matRowDef="let row; columns: displayedColumns; let ndx = index;"></mat-row>
+      </mat-table>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()" cdkFocusInitial>Close</button>
+  <!-- <button mat-button [mat-dialog-close]="videos" cdkFocusInitial>Ok</button> -->
+</mat-dialog-actions>

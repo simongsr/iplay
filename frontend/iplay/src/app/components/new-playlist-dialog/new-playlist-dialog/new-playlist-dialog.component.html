@@ -1,0 +1,11 @@
+<h3 mat-dialog-title>New playlist</h3>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Playlist name</mat-label>
+    <input matInput matNativeControl cdkFocusInitial [(ngModel)]="data">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

@@ -1,0 +1,85 @@
+table {
+    width: 100%;
+}
+
+mat-header-row, mat-header-cell {
+    min-height: 40px;
+}
+
+mat-cell {
+    font-size: 10px;
+}
+
+mat-row, mat-cell {
+    min-height: 40px;
+    height: 40px;
+}
+
+mat-header-cell.action, mat-cell.action {
+    max-width: 70px;
+    width: 70px;
+}
+
+mat-header-cell.duration, mat-cell.duration {
+    max-width: 100px;
+    width: 100px;
+}
+
+mat-row.selected {
+    background-color: yellowgreen;
+}
+
+mat-row.playing {
+    background-color: red;
+}
+
+.mat-row:hover {
+    background-color: yellow;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+.sidenav-container {
+    position: absolute;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.list-clear-icon {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    font-size: 16px;
+}
+
+.fab {
+    position: absolute;
+    bottom: 16px;
+    right: 48px;
+}
+
+.fab-video {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}
+
+.fab-mini-add-video {
+    position: fixed;
+    bottom: 80px;
+    right: 24px;
+}
+
+.fab-mini-add-new-video {
+    position: fixed;
+    bottom: 128px;
+    right: 24px;
+}
+
+.hidden {
+    visibility: hidden;
+}

@@ -1,0 +1,23 @@
+<h3 mat-dialog-title>New video</h3>
+<mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>YouTube URL</mat-label>
+    <input matInput matNativeControl cdkFocusInitial [(ngModel)]="data.video_id">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Title</mat-label>
+    <input matInput matNativeControl [(ngModel)]="data.title">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Author</mat-label>
+    <input matInput matNativeControl [(ngModel)]="data.author.name">
+  </mat-form-field>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Duration [ms]</mat-label>
+    <input matInput type="number" matNativeControl [(ngModel)]="data.duration">
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data">Ok</button>
+</mat-dialog-actions>

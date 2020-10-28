@@ -1,0 +1,12 @@
+<h3 mat-dialog-title>Import / export</h3>
+<mat-dialog-content>
+
+  <div style="display: inline-block; padding: 20px 0px;">
+    <button type="button" mat-raised-button color="primary" cdkFocusInitial (click)="fileInput.click()">Import playlist</button>
+    <input #fileInput type="file" hidden (change)="onFileSelected()">
+  </div>
+  
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Close</button>
+</mat-dialog-actions>
